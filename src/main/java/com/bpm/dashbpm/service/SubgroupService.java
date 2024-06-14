@@ -37,4 +37,8 @@ public class SubgroupService {
         return subgroupRepository.findBynomeCidade(nomeCidade);
     }
 
+    public Subgroup addSubgroup(Subgroup subgroup) {
+        return subgroupRepository.save(subgroup);
+    }
+
 }

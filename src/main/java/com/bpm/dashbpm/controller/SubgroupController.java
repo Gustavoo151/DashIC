@@ -3,8 +3,11 @@ import java.text.Normalizer;
 import com.bpm.dashbpm.entities.Subgroup;
 import com.bpm.dashbpm.service.SubgroupService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
 
 @RestController
@@ -73,4 +76,18 @@ public class SubgroupController {
         }
         return ResponseEntity.ok(subgroups);
     }
+
+
+    @PostMapping
+    public ResponseEntity<Subgroup> addSubgroup(@RequestBody Subgroup subgroup) {
+        try {
+            Subgroup savedSubgroup = subgroupService.addSubgroup(subgroup);
+            return ResponseEntity.ok(savedSubgroup);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Erro ao salvar o subgrupo", e);
+        }
+    }
 }
+
